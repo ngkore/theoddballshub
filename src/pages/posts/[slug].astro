@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { topicClass } from '../../lib/taxonomy.js';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const d = post.data;
+const date = d.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const base = import.meta.env.BASE_URL;
+const url = (p) => (base + p).replace(/\/{2,}/g, '/');
+---
+<Base title={`${d.title} — The Oddballs`} description={d.description}>
+  <article class="wrap post">
+    <div class="post-meta">
+      <span class={`tag ${topicClass(d.topic)}`}>{d.topic}</span>
+      <span class="dest">{d.destination}</span>
+    </div>
+    <h1>{d.title}</h1>
+    <p class="byline">{d.author} · {date}</p>
+    {d.cover && <img class="cover" src={url(d.cover)} alt="" />}
+    <div class="prose"><Content /></div>
+    <a class="btn back" href={url('/')}>← More from the Oddballs</a>
+  </article>
+  <style>
+    .post { max-width: 760px; padding-top: 40px; }
+    .post-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; }
+    .byline { color: var(--ink-soft); font-weight: 700; margin: 0 0 26px; }
+    .cover { width: 100%; border: var(--line); border-radius: var(--radius); margin-bottom: 26px; }
+    .prose { font-size: 1.08rem; }
+    .prose :global(h2) { margin-top: 1.6em; }
+    .prose :global(p) { margin: 1em 0; }
+    .prose :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+    .prose :global(blockquote) { border-left: 5px solid var(--ink); margin: 1.4em 0; padding: .4em 1.1em; background: var(--paper); border-radius: 0 var(--radius) var(--radius) 0; }
+    .prose :global(code) { background: var(--paper); border: 2px solid var(--ink); padding: 1px 6px; border-radius: 6px; font-size: .9em; }
+    .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; }
+    .prose :global(li) { margin: .4em 0; }
+    .back { margin-top: 40px; }
+  </style>
+</Base>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const url = (p) => (base + p).replace(/\/{2,}/g, '/');
+---
+<Base title="Lost — The Oddballs">
+  <div class="wrap nf">
+    <h1>Well, this is odd.</h1>
+    <p class="lede">That page isn't here. Even the overthinker didn't see this coming.</p>
+    <a class="btn" href={url('/')}>Back to safe ground</a>
+  </div>
+  <style>
+    .nf { padding: 80px 0; text-align: center; }
+    .lede { font-size: 1.15rem; color: var(--ink-soft); margin-bottom: 28px; }
+  </style>
+</Base>

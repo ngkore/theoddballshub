@@ -1,0 +1,126 @@
+/* ============================================================
+   THE ODDBALLS — design system
+   Palette, type and primitives are derived from the logo:
+   five characters, bold black ink, warm cream paper.
+   ============================================================ */
+
+:root {
+  /* Paper + ink (straight from the logo) */
+  --cream:   #F2EDDF;
+  --paper:   #FBF8F0;  /* card surface, slightly brighter than the page */
+  --ink:     #1C1B19;  /* the heavy black outline colour */
+  --ink-soft:#4A4843;
+
+  /* The five Oddballs — one per character */
+  --green:   #5BAE5A;  /* glasses guy   → Tools     */
+  --orange:  #E8913C;  /* curly hair    → Living     */
+  --blue:    #4FА3C7;  /* worried blue  → Visa       */
+  --red:     #D85C6E;  /* headphones    → Podcast    */
+  --yellow:  #E8B93C;  /* hat + 'stache → Finance    */
+  --blue-fix:#4FA3C7;
+
+  /* Topic → colour map (used for tags + accents) */
+  --c-visa:    var(--blue-fix);
+  --c-finance: var(--yellow);
+  --c-tools:   var(--green);
+  --c-living:  var(--orange);
+  --c-life:    var(--orange);
+  --c-podcast: var(--red);
+
+  --radius: 14px;
+  --line: 2.5px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+
+  --maxw: 1080px;
+  --font-display: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.65;
+  /* faint dotted paper, echoing the notebook the idea was sketched in */
+  background-image: radial-gradient(var(--ink) 0.6px, transparent 0.6px);
+  background-size: 26px 26px;
+  background-position: -13px -13px;
+}
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+a { color: inherit; }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.05; letter-spacing: -0.5px; }
+h1 { font-size: clamp(2.1rem, 6vw, 4rem); margin: 0 0 .3em; }
+h2 { font-size: clamp(1.5rem, 4vw, 2.3rem); margin: 0 0 .5em; }
+
+/* ---- Tag pill ---- */
+.tag {
+  display: inline-flex; align-items: center; gap: .4em;
+  font-family: var(--font-display);
+  font-size: .72rem; letter-spacing: .5px; text-transform: uppercase;
+  padding: .35em .75em; border: var(--line); border-radius: 100px;
+  background: var(--paper); text-decoration: none; line-height: 1;
+}
+.tag--visa    { background: var(--c-visa); }
+.tag--finance { background: var(--c-finance); }
+.tag--tools   { background: var(--c-tools); }
+.tag--living  { background: var(--c-living); }
+.tag--life    { background: var(--c-life); }
+.tag--podcast { background: var(--c-podcast); color: var(--paper); }
+
+.dest {
+  font-family: var(--font-display);
+  font-size: .72rem; letter-spacing: .5px; text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+}
+
+/* ---- Card ---- */
+.card {
+  background: var(--paper);
+  border: var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  text-decoration: none;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.card:hover, .card:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.card h3 { font-size: 1.25rem; margin: 0; }
+.card p { margin: 0; color: var(--ink-soft); font-size: .98rem; }
+.card .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* ---- Button ---- */
+.btn {
+  display: inline-block; font-family: var(--font-display); font-size: .85rem;
+  letter-spacing: .5px; text-transform: uppercase; text-decoration: none;
+  padding: .7em 1.2em; border: var(--line); border-radius: 100px;
+  background: var(--ink); color: var(--cream);
+  box-shadow: var(--shadow); transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover, .btn:focus-visible { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+
+/* ---- Grid ---- */
+.grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+/* ---- Focus visibility (a11y floor) ---- */
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* ---- Section heading with rule ---- */
+.section-head { display: flex; align-items: baseline; gap: 14px; margin: 48px 0 22px; }
+.section-head::after { content: ""; flex: 1; height: 2.5px; background: var(--ink); }

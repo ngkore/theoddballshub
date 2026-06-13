@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { TOPICS } from '../../content/config.ts';
+import { byDate, topicSlug } from '../../lib/taxonomy.js';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return TOPICS.map((topic) => ({
+    params: { topic: topicSlug(topic) },
+    props: { topic, posts: posts.filter((p) => p.data.topic === topic).sort(byDate) },
+  }));
+}
+
+const { topic, posts } = Astro.props;
+const blurbs = {
+  'Visa': 'Applications, appointments, paperwork and the bits that trip everyone up. Specific to where you\u2019re going.',
+  'Finance': 'Loans, bank accounts, taxes and not getting fleeced while you settle in.',
+  'Tools': 'The apps, bots and toolkits we actually keep using — including our Telegram setup.',
+  'Living': 'Finding a flat, getting set up, the cheap option for nearly everything.',
+  'Life Tips': 'General hard-won lessons that don\u2019t fit a country or a category.',
+  'Podcast': 'Our episodes — the visa walkthroughs and conversations, in case you\u2019d rather listen.',
+};
+---
+<Base title={`${topic} — The Oddballs`} description={blurbs[topic]}>
+  <div class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Topic</p>
+      <h1>{topic}</h1>
+      <p class="lede">{blurbs[topic]}</p>
+    </div>
+    {posts.length === 0
+      ? <p class="empty">Nothing here yet — this is where {topic.toLowerCase()} posts will land.</p>
+      : <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div>}
+  </div>
+  <style>
+    .page-head { padding: 46px 0 26px; }
+    .eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; font-size: .8rem; color: var(--ink-soft); margin: 0 0 10px; }
+    .lede { font-size: 1.1rem; max-width: 60ch; color: var(--ink-soft); }
+    .empty { background: var(--paper); border: var(--line); border-radius: var(--radius); padding: 26px; }
+  </style>
+</Base>

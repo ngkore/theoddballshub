@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { byDate, topicSlug } from '../lib/taxonomy.js';
+
+const base = import.meta.env.BASE_URL;
+const url = (p) => (base + p).replace(/\/{2,}/g, '/');
+
+const posts = (await getCollection('posts')).sort(byDate);
+const featured = posts.filter((p) => p.data.featured).slice(0, 3);
+const latest = posts.slice(0, 6);
+
+const balls = [
+  { c: 'var(--green)',   label: 'curious' },
+  { c: 'var(--orange)',  label: 'restless' },
+  { c: 'var(--blue-fix)',label: 'overthinks it' },
+  { c: 'var(--red)',     label: 'plugged in' },
+  { c: 'var(--yellow)',  label: 'seen some things' },
+];
+---
+<Base>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Things that make these balls odd</p>
+      <h1>We figured it out abroad<br/>so you don't have to wing it.</h1>
+      <p class="lede">
+        Five of us, moving between Prague, France and wherever's next. The visa
+        runarounds, the money mistakes, the "nobody tells you this" stuff — written
+        down honestly, from actually doing it.
+      </p>
+      <div class="hero-balls" aria-hidden="true">
+        {balls.map((b) => (
+          <span class="hball" style={`background:${b.c}`}><em>{b.label}</em></span>
+        ))}
+      </div>
+      <a class="btn" href={url('/topics/visa')}>Start with the visa stuff</a>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <div class="wrap">
+      <div class="section-head"><h2>Worth your time</h2></div>
+      <div class="grid">
+        {featured.map((p) => <PostCard post={p} />)}
+      </div>
+    </div>
+  )}
+
+  <div class="wrap">
+    <div class="section-head"><h2>Latest</h2></div>
+    {latest.length === 0
+      ? <p class="empty">No posts yet. Drop a markdown file in <code>src/content/posts/</code> and it shows up here.</p>
+      : <div class="grid">{latest.map((p) => <PostCard post={p} />)}</div>}
+  </div>
+
+  <style>
+    .hero { padding: 56px 0 28px; }
+    .eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; font-size: .8rem; color: var(--ink-soft); margin: 0 0 14px; }
+    .lede { font-size: 1.15rem; max-width: 56ch; color: var(--ink-soft); }
+    .hero-balls { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0; }
+    .hball { display: inline-flex; align-items: center; justify-content: center; width: 120px; height: 120px; border-radius: 50%; border: var(--line); box-shadow: var(--shadow); position: relative; }
+    .hball em { font-style: normal; font-family: var(--font-body); font-weight: 800; font-size: .82rem; text-align: center; padding: 0 8px; mix-blend-mode: multiply; }
+    .empty { background: var(--paper); border: var(--line); border-radius: var(--radius); padding: 26px; }
+    .empty code { background: var(--cream); padding: 2px 6px; border-radius: 5px; }
+    @media (max-width: 560px) { .hball { width: 92px; height: 92px; } .hball em { font-size: .72rem; } }
+  </style>
+</Base>

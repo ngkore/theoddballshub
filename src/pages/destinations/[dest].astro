@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { DESTINATIONS } from '../../content/config.ts';
+import { byDate, destSlug } from '../../lib/taxonomy.js';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return DESTINATIONS.map((dest) => ({
+    params: { dest: destSlug(dest) },
+    props: { dest, posts: posts.filter((p) => p.data.destination === dest).sort(byDate) },
+  }));
+}
+
+const { dest, posts } = Astro.props;
+const blurbs = {
+  'Prague': 'Everything we\u2019ve learned moving to and living in Prague — visas, flats, money, day-to-day.',
+  'France': 'Our notes on France — the visa route, the admin, settling in.',
+  'General': 'Advice that travels: not tied to one country, useful wherever you land.',
+};
+---
+<Base title={`${dest} — The Oddballs`} description={blurbs[dest]}>
+  <div class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Where</p>
+      <h1>{dest}</h1>
+      <p class="lede">{blurbs[dest]}</p>
+    </div>
+    {posts.length === 0
+      ? <p class="empty">No {dest} posts yet.</p>
+      : <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div>}
+  </div>
+  <style>
+    .page-head { padding: 46px 0 26px; }
+    .eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; font-size: .8rem; color: var(--ink-soft); margin: 0 0 10px; }
+    .lede { font-size: 1.1rem; max-width: 60ch; color: var(--ink-soft); }
+    .empty { background: var(--paper); border: var(--line); border-radius: var(--radius); padding: 26px; }
+  </style>
+</Base>
