@@ -11,6 +11,6 @@ import { defineConfig } from 'astro/config';
 // site to your domain.
 // ─────────────────────────────────────────────────────────────
 export default defineConfig({
-  site: 'https://theoddballshub.github.io',
-  base: '/oddballs-site',
+  site: 'https://ngkore.github.io',
+  base: '/theoddballshub',
 });
