@@ -1,32 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
-const balls = [
-  { c: 'var(--green)',   name: 'The one with the glasses', role: 'reads the fine print so you don\u2019t have to' },
-  { c: 'var(--orange)',  name: 'The restless one',         role: 'has already moved twice this year' },
-  { c: 'var(--blue-fix)',name: 'The overthinker',          role: 'maps every worst-case scenario' },
-  { c: 'var(--red)',     name: 'The one on the mic',        role: 'runs the podcast' },
-  { c: 'var(--yellow)',  name: 'The seasoned one',          role: 'has seen some things' },
-];
+const base = import.meta.env.BASE_URL;
+const url = (p) => (base + p).replace(/\/{2,}/g, '/');
 ---
 <Base title="About — The Oddballs" description="Who the Oddballs are and why we write this stuff down.">
   <div class="wrap about">
+    <img class="logo" src={url('/images/the-oddballs.png')} alt="The Oddballs — five characters, the logo of the group" />
     <p class="eyebrow">About</p>
-    <h1>We're five oddballs.</h1>
+    <h1>We're oddballs.</h1>
     <p class="lede">
       We started The Oddballs as a side thing — away from the day jobs — to talk about
-      the stuff we were actually living through: moving countries, wrestling with visas,
-      figuring out money in a place where you don't speak the language yet. It turned out
-      other people were stuck on the exact same things. So we write it down. Honestly,
+      whatever we're actually living through. Moving countries, visas, money, the tools
+      we end up relying on, random life lessons that don't fit anywhere else. It turned
+      out other people were stuck on the exact same things. So we write it down. Honestly,
       from experience, separating what we know works from what we're still guessing at.
     </p>
-    <div class="crew">
-      {balls.map((b) => (
-        <div class="member">
-          <span class="m-ball" style={`background:${b.c}`}></span>
-          <div><strong>{b.name}</strong><br/><span class="role">{b.role}</span></div>
-        </div>
-      ))}
-    </div>
     <p class="note">
       Names and faces are deliberately loose — the point is the lessons, not us. Got a
       question, or learned something the hard way yourself? Find us on
@@ -35,12 +23,9 @@ const balls = [
   </div>
   <style>
     .about { max-width: 720px; padding-top: 44px; }
+    .logo { display: block; width: 100%; max-width: 360px; margin: 0 auto 32px; border: var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
     .eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 1px; font-size: .8rem; color: var(--ink-soft); margin: 0 0 12px; }
-    .lede { font-size: 1.15rem; color: var(--ink-soft); }
-    .crew { display: grid; gap: 16px; margin: 36px 0; }
-    .member { display: flex; gap: 16px; align-items: center; background: var(--paper); border: var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
-    .m-ball { width: 46px; height: 46px; border-radius: 50%; border: var(--line); flex: none; }
-    .role { color: var(--ink-soft); }
+    .lede { font-size: 1.15rem; color: var(--ink-soft); margin-bottom: 36px; }
     .note { background: var(--paper); border: var(--line); border-radius: var(--radius); padding: 20px; }
   </style>
 </Base>

@@ -18,6 +18,8 @@
   --red:     #D85C6E;  /* headphones    → Podcast    */
   --yellow:  #E8B93C;  /* hat + 'stache → Finance    */
   --blue-fix:#4FA3C7;
+  --purple:  #9B72CF;  /* extra accent → Creativity */
+  --teal:    #4FB6A8;  /* extra accent → Quotes */
 
   /* Topic → colour map (used for tags + accents) */
   --c-visa:    var(--blue-fix);
@@ -25,6 +27,9 @@
   --c-tools:   var(--green);
   --c-living:  var(--orange);
   --c-life:    var(--orange);
+  --c-creativity: var(--purple);
+  --c-quotes:  var(--teal);
+  --c-misc:    var(--ink-soft);
   --c-podcast: var(--red);
 
   --radius: 14px;
@@ -78,6 +83,9 @@ h2 { font-size: clamp(1.5rem, 4vw, 2.3rem); margin: 0 0 .5em; }
 .tag--tools   { background: var(--c-tools); }
 .tag--living  { background: var(--c-living); }
 .tag--life    { background: var(--c-life); }
+.tag--creativity { background: var(--c-creativity); color: var(--paper); }
+.tag--quotes  { background: var(--c-quotes); color: var(--paper); }
+.tag--misc    { background: var(--c-misc); color: var(--paper); }
 .tag--podcast { background: var(--c-podcast); color: var(--paper); }
 
 .dest {

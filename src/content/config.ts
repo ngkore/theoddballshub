@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 // The two axes that organise everything on the site.
 // Add a value here (e.g. a new destination) and it works everywhere.
-export const TOPICS = ['Visa', 'Finance', 'Tools', 'Living', 'Life Tips', 'Podcast'] as const;
+export const TOPICS = ['Visa', 'Finance', 'Tools', 'Living', 'Life Tips', 'Creativity', 'Quotes', 'Misc', 'Podcast'] as const;
 export const DESTINATIONS = ['Prague', 'France', 'General'] as const;
 
 const posts = defineCollection({
@@ -18,8 +18,11 @@ const posts = defineCollection({
     destination: z.enum(DESTINATIONS),
     // Optional: pin to the homepage "featured" row.
     featured: z.boolean().default(false),
-    // Optional cover image path under /public, e.g. '/images/prague.jpg'
+    // Optional cover image — either a path under /public (e.g. '/images/prague.jpg')
+    // or a full external URL (e.g. a YouTube thumbnail).
     cover: z.string().optional(),
+    // Optional: link to an external resource (e.g. the YouTube video itself).
+    externalUrl: z.string().url().optional(),
   }),
 });
 

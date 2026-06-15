@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title = 'The Oddballs', description = 'Real-life lessons from five oddballs figuring it out abroad.' } = Astro.props;
+const { title = 'The Oddballs', description = 'Real-life lessons from five oddballs — whatever we get into, written down.' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const url = (p) => (base + p).replace(/\/{2,}/g, '/');
 
@@ -10,12 +10,10 @@ const nav = [
   { label: 'Tools',     href: 'topics/tools' },
   { label: 'Living',    href: 'topics/living' },
   { label: 'Life Tips', href: 'topics/life-tips' },
+  { label: 'Creativity', href: 'topics/creativity' },
+  { label: 'Quotes',    href: 'topics/quotes' },
+  { label: 'Misc',      href: 'topics/misc' },
   { label: 'Podcast',   href: 'topics/podcast' },
-];
-const dests = [
-  { label: 'Prague',  href: 'destinations/prague' },
-  { label: 'France',  href: 'destinations/france' },
-  { label: 'General', href: 'destinations/general' },
 ];
 // The five logo colours, used as the little ball-row mark.
 const balls = ['var(--green)','var(--orange)','var(--blue-fix)','var(--red)','var(--yellow)'];
@@ -44,10 +42,6 @@ const balls = ['var(--green)','var(--orange)','var(--blue-fix)','var(--red)','va
       <nav id="nav" class="site-nav">
         <div class="nav-group">
           {nav.map((n) => <a href={url('/' + n.href)}>{n.label}</a>)}
-        </div>
-        <div class="nav-group nav-dest">
-          <span class="nav-label">Where</span>
-          {dests.map((d) => <a href={url('/' + d.href)}>{d.label}</a>)}
         </div>
       </nav>
     </div>
@@ -81,8 +75,6 @@ const balls = ['var(--green)','var(--orange)','var(--blue-fix)','var(--red)','va
     .nav-group { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .site-nav a { text-decoration: none; font-weight: 700; font-size: .95rem; }
     .site-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
-    .nav-dest { padding-left: 18px; border-left: 2.5px solid var(--ink); }
-    .nav-label { font-family: var(--font-display); font-size: .7rem; text-transform: uppercase; opacity: .55; }
     .menu-toggle { display: none; font-family: var(--font-display); font-size: .8rem; text-transform: uppercase; background: var(--ink); color: var(--cream); border: var(--line); border-radius: 100px; padding: .5em 1em; cursor: pointer; }
 
     .site-foot { border-top: var(--line); margin-top: 70px; padding: 34px 0; background: var(--paper); }
@@ -95,7 +87,6 @@ const balls = ['var(--green)','var(--orange)','var(--blue-fix)','var(--red)','va
       .menu-toggle { display: inline-block; margin-left: auto; }
       .site-nav { flex-basis: 100%; flex-direction: column; align-items: flex-start; gap: 12px; display: none; }
       .site-nav.open { display: flex; }
-      .nav-dest { padding-left: 0; border-left: none; padding-top: 12px; border-top: 2.5px solid var(--ink); width: 100%; }
     }
   </style>
   <script>

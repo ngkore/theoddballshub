@@ -23,18 +23,18 @@ const balls = [
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow">Things that make these balls odd</p>
-      <h1>We figured it out abroad<br/>so you don't have to wing it.</h1>
+      <h1>Five of us, figuring stuff out<br/>and writing it down.</h1>
       <p class="lede">
-        Five of us, moving between Prague, France and wherever's next. The visa
-        runarounds, the money mistakes, the "nobody tells you this" stuff — written
-        down honestly, from actually doing it.
+        Visas, money, tools, moving countries, random life stuff — whatever we end up
+        learning the hard way outside our day jobs lands here. No fixed topic list:
+        if it's useful, honest, and ours, it gets a post.
       </p>
       <div class="hero-balls" aria-hidden="true">
         {balls.map((b) => (
           <span class="hball" style={`background:${b.c}`}><em>{b.label}</em></span>
         ))}
       </div>
-      <a class="btn" href={url('/topics/visa')}>Start with the visa stuff</a>
+      <a class="btn" href={url('/about')}>Who we are</a>
     </div>
   </section>
 
